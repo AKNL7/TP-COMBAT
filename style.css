@@ -1,0 +1,14 @@
+form{
+display: flex; 
+flex-direction: column;
+align-items: center;
+margin-top: 20%;
+
+}
+
+.enter{
+    display: flex;
+    align-items:top;
+    justify-content: space-between;
+    
+}

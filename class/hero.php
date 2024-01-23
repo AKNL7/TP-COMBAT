@@ -7,14 +7,17 @@ class Hero {
    private int $health_point; 
 
 
-public function __construct($name){
-    $this->name = $name;
-
+public function __construct($data){
+    $this->name = $data['name'];
+    // $this->id = $data['id'];
+    // $this->health_point = $data($_POST['health_point']);
 }
 
 public function hit() {}
 
-
+public function setName($name) {
+    $this->name = $name;
+}
 
 public function getName() {
     return $this->name;

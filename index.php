@@ -1,3 +1,29 @@
+<?php
+
+require_once './config/db.php';
+require_once './class/heroesManager.php';
+require_once './class/hero.php';
+
+
+$heroesManager = new heroesManager($db);
+if (isset($_POST['name']) && !empty($_POST['name'])) {
+
+    $heros = new Hero($_POST);
+
+    $heros->getName();
+
+    $heroesManager->add($heros);
+    
+ 
+   
+}
+
+$heroesAlive = $heroesManager->findAllAlive();
+// var_dump($heroesAlive)
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,27 +52,21 @@
     </form>
 
 
+    <div class="card">
+        <div class="container">
+            <div class="hero_card">
+                <?php foreach($heroesAlive as $heroAlive){ ?>
+                    <img src="./img/kisspng-costume-party-clothing-halloween-costume-adult-cock-5abb7554cf07a9.521466961522234708848.png" alt="Avatar" style="width:50px">
+            <h4><b><?= $heroAlive ->getName()?></b></h4>
+            <p><?= $heroAlive -> getHealthPoint() ?></p>
+
+       <?php } ?>
+    </div>
+  </div>
+</div>
+
+
 </body>
 
 </html>
 
-<?php
-
-require_once './config/db.php';
-require_once './class/heroesManager.php';
-require_once './class/hero.php';
-
-
-if (isset($_POST['name']) && !empty($_POST['name'])) {
-
-    $heroesManager = new heroesManager($db);
-    $heros = new Hero($_POST['name']);
-
-    $heros->getName();
-
-    $heroesManager->add($heros);
-
-    $heros->setId($id);
-    $heros->setHealthPoint(100);
-}
-?>

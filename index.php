@@ -1,72 +1,60 @@
 <?php
+include_once('partials/header.php');
+require_once('./config/db.php');
+require_once('./config/autoload.php');
 
-require_once './config/db.php';
-require_once './class/heroesManager.php';
-require_once './class/hero.php';
 
 
 $heroesManager = new heroesManager($db);
-if (isset($_POST['name']) && !empty($_POST['name'])) {
 
-    $heros = new Hero($_POST);
+if (isset($_POST['hero_name']) && !empty($_POST['hero_name'])) {
 
-    $heros->getName();
 
+    $heros = new Hero([
+        'name' => $_POST['hero_name']
+    ]);
+    // $heros->setName($_POST['hero_name']);
     $heroesManager->add($heros);
-    
- 
    
 }
+$heroesManager->findAllAlive();
 
-$heroesAlive = $heroesManager->findAllAlive();
-// var_dump($heroesAlive)
 
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
-
-</head>
-
-<body>
-
-
-    <form class="form -style-4" action="" method="post">
-        <label for="field1">
-            <span class="enter">Enter Your Name</span><input type="text" name="name" />
-        </label>
-
-        <label>
-            <span></span><input type="submit" value="Choose" />
-        </label>
-    </form>
-
-
-    <div class="card">
-        <div class="container">
-            <div class="hero_card">
-                <?php foreach($heroesAlive as $heroAlive){ ?>
-                    <img src="./img/kisspng-costume-party-clothing-halloween-costume-adult-cock-5abb7554cf07a9.521466961522234708848.png" alt="Avatar" style="width:50px">
-            <h4><b><?= $heroAlive ->getName()?></b></h4>
-            <p><?= $heroAlive -> getHealthPoint() ?></p>
-
-       <?php } ?>
+<form action="" method="post">
+    <div class="mb-3 mt-4 p-4">
+        <label for="name" class="form-label">Nom de votre héros : </label>
+        <input type="text" class="form-control" id="hero_name" name="hero_name" aria-describedby="hero_name">
+        <button type="submit" class="btn btn-primary mt-4">Submit</button>
     </div>
-  </div>
+
+
+</form>
+
+
+
+
+
+<div class="card" style="width: 15rem;">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Nom</li>
+        <li class="list-group-item">A second item</li>
+       
+    </ul>
 </div>
 
 
-</body>
 
-</html>
 
+
+
+<?php
+include_once('partials/footer.php');
+?>

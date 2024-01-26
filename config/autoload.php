@@ -12,6 +12,7 @@ ini_set("html_errors", "1");
 ini_set("error_prepend_string", "<pre style='color: #333; font-face:monospace; white-space: pre-wrap;font-size: 17px;color:#880808'>");
 ini_set("error_append_string ", "</pre>");
 
+
 // Autoload logic
 function chargerClasse($classname)
 {

@@ -62,7 +62,12 @@ class Hero
     }
 
 
-    public function hit()
+    public function hit(Monster $monster)
     {
+        $damage = rand(0,40);
+        $monsterHealthPoint = $monster->getHpoint(); 
+        $monster->setHpoint($monsterHealthPoint - $damage); 
+
+        return $damage;
     }
 }

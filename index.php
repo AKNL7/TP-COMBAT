@@ -15,9 +15,9 @@ if (isset($_POST['hero_name']) && !empty($_POST['hero_name'])) {
     ]);
     // $heros->setName($_POST['hero_name']);
     $heroesManager->add($heros);
-   
 }
-$heroesManager->findAllAlive();
+$heroes = $heroesManager->findAllAlive();
+// var_dump($heroes);
 
 
 ?>
@@ -37,19 +37,30 @@ $heroesManager->findAllAlive();
 
 
 
+<div class="container">
+    <div class="row">
 
-<div class="card" style="width: 15rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
+        <?php foreach ($heroes as $hero) { ?>
+            <div class="col-4 mt-4">
+                <div class="card" style="width: 15rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Votre Hero : <?php echo $hero->getName() ?></h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Point de vie :<?php echo $hero->getHp() ?></li>
+
+                        <form action="fight.php" method="post">
+                            <input type="hidden" name="hero_id" value="<?php echo $hero->getId() ?>">
+                            <button type="submit" class="list-group-item">Choose</button>
+                        </form>
+                    </ul>
+                </div>
+
+            </div>
+        <?php } ?>
     </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Nom</li>
-        <li class="list-group-item">A second item</li>
-       
-    </ul>
 </div>
-
 
 
 

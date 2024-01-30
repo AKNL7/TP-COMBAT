@@ -23,21 +23,45 @@ class heroesManager
         $heros->setId($id);
     }
 
-    public function findAllAlive()
+    public function findAllAlive(): array
     {
-        $request = $this->db->query('SELECT * FROM heroes WHERE health_point > 0');
-        $heroesAlive = $request->fetchAll();
+        $request = $this->db->query('SELECT * FROM heroes WHERE heroes.health_point > 0');
+        // cette requête retourne un tableau de hero qui ont des points de vie supérieur à 0
+        $heroesAlives = $request->fetchAll();
         // var_dump($heroesAlive); pour voir les heros
 
-        return $heroes = []; //doit stocker les instances de la classe Hero
+        $heroes = []; //doit stocker les instances de la classe Hero
 
-        foreach ($heroesAlive as $heroAlive) {
+        foreach ($heroesAlives as $heroAlive) {
             $hero = new Hero($heroAlive);
-            $heroes[] = $hero; 
-            
+            $heroes[] = $hero;
         }
- var_dump($heroes); 
-       
+
+
         return $heroes; // il doit nous renvoyer des ojets hero
+    }
+
+    public function find(int $id): Hero
+    {
+        $request = $this->db->prepare('SELECT * FROM heroes WHERE id = :id');
+        $request->execute([
+            ':id' => $id,
+        ]);
+
+        $foundHero = $request->fetch();
+        // juste fetch() car on chercher un hero precis avec l'id
+
+        // var_dump($foundHero);
+        $hero = new Hero($foundHero);
+        return $hero;
+    }
+
+    public function update(Hero $hero)
+    {
+        $request = $this->db->prepare('UPDATE heroes SET health_point = :health_point WHERE id = :id');
+        $request->execute([
+            ':health_point' => $hero->getHp(),
+            ':id' => $hero->getId(), // on reprends toujours les valeurs, l'objet qu'on doit update puis on appelle les get 
+        ]);
     }
 }
